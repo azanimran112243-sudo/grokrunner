@@ -58,28 +58,8 @@
     a   { text-decoration: none; color: inherit; }
     ul  { list-style: none; }
 
-    /* ============================================================
-       WATERMARK SUPPRESSION & CURSOR LAG PATCH
-    ============================================================ */
-    .unicorn-studio-watermark,
-    [class*="unicorn-studio-watermark"],
-    div[style*="z-index: 9999"], 
-    iframe[src*="unicornstudio"],
-    a[href*="unicornstudio"] {
-      display: none !important;
-      visibility: hidden !important;
-      opacity: 0 !important;
-      pointer-events: none !important;
-      height: 0 !important;
-      width: 0 !important;
-    }
+  
 
-    [data-us-project],
-    canvas,
-    .unicorn-studio-container {
-      pointer-events: none !important;
-      transition: none !important;
-    }
 
     /* ============================================================
        NAVBAR
@@ -181,6 +161,9 @@
     /* ============================================================
        HERO
     ============================================================ */
+   /* ============================================================
+       HERO
+    ============================================================ */
     #hero {
       position: relative;
       width: 100vw;
@@ -190,20 +173,25 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      background: var(--black);
+      
+      /* Base background image setup */
+      background: url('bg.jpg') no-repeat center center; 
+      background-size: cover;
     }
     #hero::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at 50% 60%, #1a1a1a 0%, #000 70%);
-      z-index: 0;
+      /* Much lighter, transparent overlay tint so the image shines through */
+      background: radial-gradient(ellipse at 50% 60%, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%);
+      z-index: 1;
     }
     #hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.65) 100%);
+      /* Reduced ambient darkness layer */
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.4) 100%);
       z-index: 1;
       pointer-events: none;
     }
@@ -228,17 +216,16 @@
       letter-spacing: -0.02em;
       text-transform: uppercase;
       color: var(--white);
-      text-shadow: 
-        -2px -2px 0 var(--black),  
-         2px -2px 0 var(--black),
-        -2px  2px 0 var(--black),
-         2px  2px 0 var(--black),
-         0px  4px 20px rgba(0,0,0,0.6);
+      
+      /* REMOVED OUTLINE: Replaced with a clean, soft drop shadow for elite legibility */
+      text-shadow: 0px 4px 24px rgba(0, 0, 0, 0.5);
+      
       animation: fadeUp 0.9s var(--ease-smooth) 0.35s both;
     }
     .hero-headline em {
       font-style: italic;
-      color: rgba(255,255,255,0.65);
+      /* Darkened slightly from 0.65 to 0.75 so it stands out perfectly on a lighter background */
+      color: rgba(255, 255, 255, 0.75);
     }
 
     .hero-sub {
@@ -887,6 +874,9 @@
     /* ============================================================
        RESPONSIVE
     ============================================================ */
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
     @media (max-width: 1100px) {
       .products-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -894,13 +884,18 @@
       section { padding: 80px 24px; }
       #navbar { padding: 0 24px; }
       .nav-links { display: none; }
-      .products-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } /* Cleaned layout with 2 items per row */
       .contact-grid { grid-template-columns: 1fr; gap: 48px; }
       .form-row { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 20px; text-align: center; }
     }
     @media (max-width: 480px) {
-      .products-grid { grid-template-columns: 1fr; }
+      /* Adjusted grid gaps for small screens to prevent elements from feeling cramped */
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; } 
+      .product-info { padding: 12px; }
+      .product-name { font-size: 1rem; }
+      .product-price { font-size: 1.1rem; }
+      .add-cart-btn { padding: 8px 12px; font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -935,10 +930,6 @@
        HERO
   ========================= -->
   <section id="hero">
-
-    <!-- Unicorn Studio WebGL Background -->
-    <div style="width:100vw;height:100vh;position:absolute;top:0;left:0;z-index:0;" data-us-project="vLs6jugJQN60vCIEYTWK"></div>
-    <script type="text/javascript">!function(){var u=window.UnicornStudio;if(u&&u.init){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){u.init()})}else{u.init()}}else{window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.12/dist/unicornStudio.umd.js",i.onload=function(){if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})}else{UnicornStudio.init()}},(document.head||document.body).appendChild(i)}}();</script>
 
     <div class="hero-content">
       
@@ -1139,6 +1130,63 @@
         tag: 'Sale',
         imagePath: 'c1.jpg'
       },
+      {
+        id: 5,
+        name: 'Play station 5',
+        description: 'Slim disc edition',
+        price: 250000,
+        tag: 'New',
+        imagePath: 'ps51.jpg', // Path to your new image
+        
+      },
+      {
+        id: 6,
+        name: 'Play station 5',
+        description: 'Pro Digital edition 2TB',
+        price: 370000,
+        tag: 'New',
+        imagePath: 'ps52.jpg', // Path to your new image
+        
+      },
+     
+      {
+        id: 7,
+        name: 'Nintendo Switch 2',
+        description: 'Cool gaming switch',
+        price: 185000,
+        tag: 'New',
+        imagePath: 'ns.jpg', // Path to your new image
+        
+      },
+      {
+        id: 8,
+        name: 'Xbox Series X',
+        description: '2TB, black special edition',
+        price: 300000,
+        tag: 'New',
+        imagePath: 'Xb2.jpg', // Path to your new image
+        
+      },
+       {
+        id: 9,
+        name: 'Xbox Series S',
+        description: '512GB, SSD',
+        price: 150000,
+        tag: 'New',
+        imagePath: 'xssd.jpg', // Path to your new image
+        
+      },
+     
+      {
+        id: 10,
+        name: ' Playstation Dual Sense wireless Controller, Ghost of yotei',
+        description: 'Gold edition, best for PS5',
+        price: 45000,
+        tag: 'Limited',
+        imagePath: 'cont1.jpg', // Path to your new image
+        
+      },
+     
      
     ];
 
@@ -1404,9 +1452,12 @@
           return;
         }
 
+        // UPDATED HERE TO USE ACTUAL IMAGES INSTEAD OF FALLBACK SVGs
         itemsEl.innerHTML = cart.map(({ product: p, quantity }) => `
           <div class="cart-item" data-id="${p.id}">
-            <div class="cart-item-img">${PRODUCT_SVG[p.svgId]}</div>
+            <div class="cart-item-img">
+              <img src="${p.imagePath}" alt="${p.name}" style="width:100%; height:100%; object-fit:cover;">
+            </div>
             <div class="cart-item-info">
               <div class="cart-item-name">${p.name}</div>
               <div class="cart-item-price">${CONFIG.currency}${p.price} each</div>
